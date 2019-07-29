@@ -34,7 +34,8 @@ def translate():
     #sliderFrame.pack(row = 600, column=0, padx=10, pady=2)
     #sliderFrame.pack()
     show_frame()  #Display 2
-    
+    #Tensorflow
+    cvNet = cv2.dnn.readNetFromTensorflow('saved_model.pb')
 
 #Translate Button
 translate_button = tk.Button(root, highlightthickness=0, text = "    T R A N S L A T E", command = translate, anchor = 'w',

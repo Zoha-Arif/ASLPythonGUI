@@ -60,6 +60,7 @@ def translate():
 
     currentFrame = 0
     while(True):
+        show_frame()  
         currentFrame += 1
         # Capture frame-by-frame
         ret, frame = cap.read()
@@ -72,46 +73,34 @@ def translate():
         
         
             #Process images before feeding into tensorflow net
-            #img1 = cv2.imread(name)
-            #img1 = cv2.resize(img1, (28, 28))
+            img1 = cv2.imread(name)
+            img1 = cv2.resize(img1, (28, 28))
+            #img1 = tf.reshape(img1, [-1, 28, 28, 3])
+            img1 = img1.reshape([-1, 28, 28, 1])
             #print()
 
             #Analyze the Frame with Tensorflow
             with tf.gfile.FastGFile('saved_model.pb', 'rb') as f:
                 graph_def = tf.GraphDef()
                 graph_def.ParseFromString(f.read())
-
+            CATEGORIES = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
             with tf.Session() as sess:
                 # Restore session
                 sess.graph.as_default()
                 tf.import_graph_def(graph_def, name='')
 
-                # Read and preprocess an image.
-                img = cv2.imread(name)
-                rows = img.shape[0]
-                cols = img.shape[1]
-                inp = cv2.resize(img, (28, 28))
-                inp = inp[:, :, [2, 1, 0]]  # BGR2RGB
+                input_tensor = sess.graph.get_tensor_by_name('conv2d_input:0')
+                output_tensor = sess.graph.get_tensor_by_name('dense_1/Softmax:0')
 
-                # Run the model
-                out = sess.run([sess.graph.get_tensor_by_name('num_detections:0'),
-                    sess.graph.get_tensor_by_name('detection_scores:0'),
-                    sess.graph.get_tensor_by_name('detection_boxes:0'),
-                    sess.graph.get_tensor_by_name('detection_classes:0')],
-                   feed_dict={'image_tensor:0': inp.reshape(1, inp.shape[0], inp.shape[1], 3)})
-
-                # Visualize detected bounding boxes.
-                num_detections = int(out[0][0])
-                for i in range(num_detections):
-                    classId = int(out[3][0][i])
-                    score = float(out[1][0][i])
-                    bbox = [float(v) for v in out[2][0][i]]
-                    if score > 0.3:
-                        x = bbox[1] * cols
-                        y = bbox[0] * rows
-                        right = bbox[3] * cols
-                        bottom = bbox[2] * rows
-                        cv.rectangle(img, (int(x), int(y)), (int(right), int(bottom)), (125, 255, 51), thickness=2)
+                #print(CATEGORIES[int(values[0][0])])
+                values = sess.run(output_tensor, feed_dict={input_tensor: img1})
+                #boolarr = (values.includes("1"))
+                label = np.where(values > 0)
+                print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+                print(label)
+                print(values)
+                print(CATEGORIES[int(label[0][0])])
+              
 
 
     # When everything done, release the capture

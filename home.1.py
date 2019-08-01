@@ -111,7 +111,7 @@ def translate():
                         y = bbox[0] * rows
                         right = bbox[3] * cols
                         bottom = bbox[2] * rows
-                        cv.rectangle(img, (int(x), int(y)), (int(right), int(bottom)), (125, 255, 51), thickness=2)
+                        cv.rectangle(img, (int(x), int(y)), (int(right), int(bottom)), (15, 15, 51), thickness=2)
 
 
     # When everything done, release the capture

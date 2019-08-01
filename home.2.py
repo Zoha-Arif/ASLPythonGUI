@@ -59,7 +59,7 @@ def translate():
         print ('Error: Creating directory of data')
 
     currentFrame = 0
-    while(True):
+    while(currentFrame <= 5000):
         show_frame()  
         currentFrame += 1
         # Capture frame-by-frame
@@ -71,13 +71,10 @@ def translate():
             cv2.imwrite(name, frame)
             # To stop duplicate images
         
-        
             #Process images before feeding into tensorflow net
             img1 = cv2.imread(name)
             img1 = cv2.resize(img1, (28, 28))
-            #img1 = tf.reshape(img1, [-1, 28, 28, 3])
             img1 = img1.reshape([-1, 28, 28, 1])
-            #print()
 
             #Analyze the Frame with Tensorflow
             with tf.gfile.FastGFile('saved_model.pb', 'rb') as f:
@@ -94,12 +91,18 @@ def translate():
 
                 #print(CATEGORIES[int(values[0][0])])
                 values = sess.run(output_tensor, feed_dict={input_tensor: img1})
-                #boolarr = (values.includes("1"))
-                label = np.where(values > 0)
+                #values is of class numpy.ndarray
+                fineArray = []
+                for i in range(len(values[0])):
+                    if (values[1, i] > 0):
+                        fineArray.append(i)
+                        print(fineArray)
                 print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
-                print(label)
                 print(values)
-                print(CATEGORIES[int(label[0][0])])
+                print(fineArray)
+                print(CATEGORIES[fineArray[0]])
+                print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+               
               
 
 

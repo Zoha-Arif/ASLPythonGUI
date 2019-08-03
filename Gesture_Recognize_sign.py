@@ -61,8 +61,9 @@ while True:
         grey = cv2.cvtColor(crop_img, cv2.COLOR_BGR2GRAY)
         
         thresh = cv2.threshold(grey,210,255,cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)[1]
-      
-        
+        #thresh = cv2.threshold(grey,210,255,cv2.THRESH_TOZERO+cv2.THRESH_OTSU)[1]
+        #thresh = cv2.Canny(grey,210,255) 
+        #thresh = cv2.cvtColor(crop_img, cv2.COLOR_BGR2GRAY)
         blackboard = np.zeros(frame.shape, dtype=np.uint8)
         cv2.putText(blackboard, "Translation: ", (30, 40), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 203, 253))
         cv2.putText(blackboard, "Press 'C' to begin translation program and 'Q' to quit/return home.", (30, 60), cv2.FONT_HERSHEY_DUPLEX, 0.4, (0, 203, 253))

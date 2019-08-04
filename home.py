@@ -39,7 +39,7 @@ def translate():
     #execfile('Gesture_Recognize_sign.py')
     #os.system('python Gesture_Recognize_sign.py &')
     #os.system('python markov_nextwordpred.py &')
-    for file in ('Gesture_Recognize_sign', 'markov_nextwordpred'): 
+    for file in ('markov_nextwordpred', 'Gesture_Recognize_sign'): 
         p = multiprocessing.Process(target=lambda __import__: file)
         p.start()
    

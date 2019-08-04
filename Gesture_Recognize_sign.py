@@ -1,8 +1,29 @@
 import cv2
 import numpy as np
 from keras.models import load_model
+import tkinter as tk
+from PIL import ImageTk, Image
+import cv2
+import requests
+import random 
+import numpy as np
 
-execfile('markov_nextwordpred.py')
+import numpy as np
+import os
+import six.moves.urllib as urllib
+import sys
+import tarfile
+import tensorflow as tf
+import zipfile
+
+from collections import defaultdict
+from io import StringIO
+from matplotlib import pyplot as plt
+from PIL import Image
+#from utils import label_map_util
+#from utils import visualization_utils as vis_
+import keras
+
  
 model = load_model('./new_model6.h5')
 
@@ -52,7 +73,14 @@ flag = False
 while True:
     
     if frame is not None: 
-        
+        #=============For text predictor============= 
+        #from markov_nextwordpred import c, last_suggestion 
+        def c(cVar): 
+            cv2.putText(blackboard, cVar, (50, 40), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 203, 253))
+        def last(last_suggestion):
+            cv2.putText(blackboard, last_suggestion, (50, 40), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 203, 253))
+        #============================================ 
+
         frame = cv2.flip(frame, 1)
         frame = cv2.resize( frame, (500,500) )
                                                   # B  G  R
@@ -85,10 +113,13 @@ while True:
             cv2.putText(blackboard, total_str, (30, 120), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 203, 253))
         res = np.hstack((frame, blackboard))
         
-        cv2.imshow("Translation App", res)
+        cv2.imshow("ASL Translation App", res)
+        cv2.namedWindow('ASL Translation App')
+        #cv2.resizeWindow('ASL Translation App', 800, 800)
         cv2.imshow("Image", thresh)
         
     rval, frame = vc.read()
+
     keypress = cv2.waitKey(1)
     if keypress == ord('c'):
         flag = True
@@ -96,6 +127,24 @@ while True:
         break
     if keypress == ord('d'):
         total_str = total_str[:-1]
+    if keypress == ord('t'):
+        exec(open('markov_nextwordpred.py').read())
+    
+    def nothing(x):
+        pass
+    # create switch for ON/OFF predictor text functionality
+    img = np.zeros((300,512,3), np.uint8)
+    switch = '0 : OFF : ON'
+    #Parameters: LabelforTrackbar, Window, Minimum Value, Max Value, callback(function that will be called whenever value changes)
+    cv2.createTrackbar(switch, 'ASL Translation App',0,1,nothing)
+    s = cv2.getTrackbarPos(switch,'ASL Translation App')
+    #If switch is on then execute predictor text file. 
+    if s == 1:
+        exec(open('markov_nextwordpred.py').read())
+        img[:] = 1
+        print("Somethin' happenings!")
+    else: 
+        img[:] = 0
 
 vc.release()
 cv2.destroyAllWindows()

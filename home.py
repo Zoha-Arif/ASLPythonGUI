@@ -5,9 +5,26 @@ import requests
 import random 
 import numpy as np
 
+import numpy as np
+import os
+import six.moves.urllib as urllib
+import sys
+import tarfile
+import tensorflow as tf
+import zipfile
+
+from collections import defaultdict
+from io import StringIO
+from matplotlib import pyplot as plt
+from PIL import Image
+#from utils import label_map_util
+#from utils import visualization_utils as vis_
+import keras
+
 #Arranging the HomePage
 FILENAME = 'home.png'
 root = tk.Tk()
+root.title("We Sign Together")
 canvas = tk.Canvas(root, width=750, height=490)
 canvas.pack()
 tk_img = ImageTk.PhotoImage(file = FILENAME)
@@ -17,32 +34,11 @@ canvas.create_image(0, 0, image=tk_img, anchor='nw')
 
 
 def translate():
-    frameNumber = tk.Frame(root, bg="#FFD966")
-    frameNumber.place(relwidth=1, relheight=1)
-    lmain = tk.Label(frameNumber)
-    lmain.grid(row=0, column=0)
-    cap = cv2.VideoCapture(0)
-    def show_frame():
-        ret, frame = cap.read()
-        frame = cv2.flip(frame, 1)
-        cv2image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
-        img = Image.fromarray(cv2image)
-        imgtk = ImageTk.PhotoImage(image=img)
-        lmain.imgtk = imgtk
-        lmain.configure(image=imgtk)
-        lmain.after(10, show_frame) 
-    #sliderFrame = tk.Frame(root, width=600, height=100)
-    #sliderFrame.pack(row = 600, column=0, padx=10, pady=2)
-    #sliderFrame.pack()
-    show_frame()  #Display 2
-    #Tensorflow
-    net = cv2.dnn.readNet('saved_model.pb')
-    inp = np.random.standard_normal([28, 28, 1]).astype(np.float32)
-    net.setInput(inp)
-    out = net.forward()
-    print(out)
-
-    cap.release()
+    import Gesture_Recognize_sign 
+    execfile('Gesture_Recognize_sign.py')
+ 
+   
+    
 #Translate Button
 translate_button = tk.Button(root, highlightthickness=0, text = "    T R A N S L A T E", command = translate, anchor = 'w',
                     width = 16, activebackground = "#16A9FF", bd=0, bg="#16A9FF",fg="#FFFFFF", font='Arial 9 bold')

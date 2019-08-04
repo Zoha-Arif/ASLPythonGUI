@@ -2,7 +2,8 @@ import cv2
 import numpy as np
 from keras.models import load_model
 
-
+execfile('markov_nextwordpred.py')
+ 
 model = load_model('./new_model6.h5')
 
 gestures = {
@@ -60,8 +61,8 @@ while True:
         crop_img = frame[100:300, 100:300]
         grey = cv2.cvtColor(crop_img, cv2.COLOR_BGR2GRAY)
         
-        thresh = cv2.threshold(grey,210,255,cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)[1]
-        #thresh = cv2.threshold(grey,210,255,cv2.THRESH_TOZERO+cv2.THRESH_OTSU)[1]
+        #thresh = cv2.threshold(grey,210,255,cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)[1]
+        thresh = cv2.threshold(grey,210,255,cv2.THRESH_TOZERO+cv2.THRESH_OTSU)[1]
         #thresh = cv2.Canny(grey,210,255) 
         #thresh = cv2.cvtColor(crop_img, cv2.COLOR_BGR2GRAY)
         blackboard = np.zeros(frame.shape, dtype=np.uint8)

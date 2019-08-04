@@ -23,7 +23,7 @@ from PIL import Image
 #from utils import label_map_util
 #from utils import visualization_utils as vis_
 import keras
-
+import keyboard 
  
 model = load_model('./new_model6.h5')
 
@@ -128,24 +128,14 @@ while True:
     if keypress == ord('d'):
         total_str = total_str[:-1]
     if keypress == ord('t'):
-        exec(open('markov_nextwordpred.py').read())
+        #exec(open('markov_nextwordpred.py').read()) 
+        os.system('python Gesture_Recognize_sign.py &')
+        os.system('python markov_nextwordpred.py &')
+    if keypress == ord('s'):
+        total_str = total_str + ' '
     
     def nothing(x):
         pass
-    # create switch for ON/OFF predictor text functionality
-    img = np.zeros((300,512,3), np.uint8)
-    switch = '0 : OFF : ON'
-    #Parameters: LabelforTrackbar, Window, Minimum Value, Max Value, callback(function that will be called whenever value changes)
-    cv2.createTrackbar(switch, 'ASL Translation App',0,1,nothing)
-    s = cv2.getTrackbarPos(switch,'ASL Translation App')
-    #If switch is on then execute predictor text file. 
-    if s == 1:
-        exec(open('markov_nextwordpred.py').read())
-        img[:] = 1
-        print("Somethin' happenings!")
-    else: 
-        img[:] = 0
-
 vc.release()
 cv2.destroyAllWindows()
 cv2.waitKey(1)

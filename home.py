@@ -20,7 +20,9 @@ from PIL import Image
 #from utils import label_map_util
 #from utils import visualization_utils as vis_
 import keras
-
+import multiprocessing
+import markov_nextwordpred
+import Gesture_Recognize_sign
 #Arranging the HomePage
 FILENAME = 'home.png'
 root = tk.Tk()
@@ -34,9 +36,12 @@ canvas.create_image(0, 0, image=tk_img, anchor='nw')
 
 
 def translate():
-    import Gesture_Recognize_sign 
-    execfile('Gesture_Recognize_sign.py')
- 
+    #execfile('Gesture_Recognize_sign.py')
+    #os.system('python Gesture_Recognize_sign.py &')
+    #os.system('python markov_nextwordpred.py &')
+    for file in ('Gesture_Recognize_sign', 'markov_nextwordpred'): 
+        p = multiprocessing.Process(target=lambda __import__: file)
+        p.start()
    
     
 #Translate Button

@@ -1,8 +1,9 @@
 import cv2
 import numpy as np
 from keras.models import load_model
-from Gesture_Recognize_sign import pred_text, blackboard, total_str, c(cVar), last(last_suggestion)
+from Gesture_Recognize_sign import pred_text, blackboard, total_str, c, last
 
+print("WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOORRRRRRRRRRRRRKKKKKKKKKKIIIIIIIIINNNNNNNNGGGGGGG!!!!!!!!!!!")
 train_data = 'test_text.txt'
 
 first_possible_words = {}
@@ -68,41 +69,23 @@ def next_word(tpl):
 
 trainMarkovModel()  #generate first, second words list and transitions
 
-########## demo code below ################
-#print("Usage: start typing.. program will suggest words. Press tab to chose the first suggestion or keep typing\n")
-#EXAMPLE: cv2.putText(blackboard, "Translation: ", (30, 40), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 203, 253))
-import msvcrt   #use of mscvrt to get character from user on real time without pressing enter
+########## Actual Meat Below ################
+
 c=''
 sent=''
 last_suggestion=[]
-while(c != b'\r'):  #stop when user preses enter
-    if(c != b'\t'): #if previous character was tab, then after autocompletion dont wait for user inpput.. just show suggestions
-        #c=msvcrt.getch()
-        c = total_str
-    else:
-        c = b' '
-    if(c != b'\t'): #dont print tab etc
-        #print(str(c.decode('utf-8')), end='', flush=True)
-        #text = str(c.decode('utf-8'))
-        #cv2.putText(blackboard, c, (50, 40), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 203, 253))
-        c(c)
-    #sent = sent + str(c.decode('utf-8'))  #create word on space
-    sent = sent + str(c)  #create word on space
+run = True
+while(run == True):  #stop when user presses
+    sent = total_str #create word on space
     if(c == b' '):
         tkns = sent.split()
         if(len(tkns) < 2):  #only first space encountered yet
             last_suggestion = next_word(tkns[0].lower())
-            #print(last_suggestion, end='  ', flush=True)
-            last(last_suggestion)
-            #cv2.putText(blackboard, last_suggestion, (50, 40), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 203, 253))
+            print(last_suggestion, end='  ', flush=True)
         else: #send a tuple
             last_suggestion = next_word((tkns[-2].lower(), tkns[-1].lower()))
-            last(last_suggestion)
-            #cv2.putText(blackboard, last_suggestion, (50, 40), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 203, 253))
-            #print(last_suggestion, end='  ', flush=True)
+            print(last_suggestion, end='  ', flush=True)
     if (c == b'\t' and len(last_suggestion) > 0):   #print last suggestion on tab
-        last(last_suggestion)
-        #cv2.putText(blackboard, last_suggestion, (50, 40), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 203, 253))
-        #print(last_suggestion[0], end='  ', flush=True)
+        print(last_suggestion[0], end='  ', flush=True)
         sent = sent + " " + last_suggestion[0]
  

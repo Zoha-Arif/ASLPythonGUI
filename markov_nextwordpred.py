@@ -70,7 +70,6 @@ def next_word(tpl):
         return list(d.keys())
     return None #wrong input.. return nothing
     
-print("hi :)")
 trainMarkovModel()  #generate first, second words list and transitions
 
 ########## demo code below ################
@@ -79,8 +78,6 @@ c=''
 sent=''
 last_suggestion=[]
 while(c != b'\r'):  #stop when user preses enter
-    print("eyoo")
-    
     sent = total_str  #create word on space
     print(sent)
     tkns = sent.split()

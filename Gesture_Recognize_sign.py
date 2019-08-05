@@ -24,7 +24,10 @@ from PIL import Image
 #from utils import visualization_utils as vis_
 import keras
 import keyboard 
- 
+import multiprocessing
+import markov_nextwordpred
+import subprocess
+
 model = load_model('./new_model6.h5')
 
 gestures = {
@@ -117,20 +120,21 @@ while True:
         cv2.namedWindow('ASL Translation App')
         #cv2.resizeWindow('ASL Translation App', 800, 800)
         cv2.imshow("Image", thresh)
-        
+
     rval, frame = vc.read()
 
     keypress = cv2.waitKey(1)
     if keypress == ord('c'):
         flag = True
+        #Begin word predictor
+        from subprocess import PIPE
+        #process = subprocess.Popen(['markov_nextwordpred.py'], stdout=PIPE, stderr=PIPE)
+        process = subprocess.Popen([sys.executable, "markov_nextwordpred.py"])
+        stdout, stderr = process.communicate()
     if keypress == ord('q'):
         break
     if keypress == ord('d'):
         total_str = total_str[:-1]
-    if keypress == ord('t'):
-        #exec(open('markov_nextwordpred.py').read()) 
-        os.system('python Gesture_Recognize_sign.py &')
-        os.system('python markov_nextwordpred.py &')
     if keypress == ord('s'):
         total_str = total_str + ' '
     

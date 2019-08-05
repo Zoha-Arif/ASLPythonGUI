@@ -1,11 +1,11 @@
 import cv2
 import numpy as np
 from keras.models import load_model
-from Gesture_Recognize_sign import pred_text, blackboard, total_str, c, last
+#from Gesture_Recognize_sign import total_str, c, last
+from Gesture_Recognize_sign import *
 
 print("WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOORRRRRRRRRRRRRKKKKKKKKKKIIIIIIIIINNNNNNNNGGGGGGG!!!!!!!!!!!")
 train_data = 'test_text.txt'
-
 first_possible_words = {}
 second_possible_words = {}
 transitions = {}
@@ -25,6 +25,10 @@ def get_next_probability(given_list):   #returns dictionary
     return probability_dict
 
 def trainMarkovModel():
+    first_possible_words = {}
+    second_possible_words = {}
+    transitions = {}
+    train_data = 'test_text.txt'
     for line in open(train_data):
         tokens = line.rstrip().lower().split()
         tokens_length = len(tokens)
@@ -54,7 +58,7 @@ def trainMarkovModel():
     
 
 def next_word(tpl):
-    #print(transitions)
+    print(transitions)
     if(type(tpl) == str):   #it is first word of string.. return from second word
         d = second_possible_words.get(tpl)
         if (d is not None):
@@ -66,26 +70,27 @@ def next_word(tpl):
         return list(d.keys())
     return None #wrong input.. return nothing
     
-
+print("hi :)")
 trainMarkovModel()  #generate first, second words list and transitions
 
-########## Actual Meat Below ################
-
+########## demo code below ################
+import msvcrt   #use of mscvrt to get character from user on real time without pressing enter
 c=''
 sent=''
 last_suggestion=[]
-run = True
-while(run == True):  #stop when user presses
-    sent = total_str #create word on space
-    if(c == b' '):
-        tkns = sent.split()
-        if(len(tkns) < 2):  #only first space encountered yet
-            last_suggestion = next_word(tkns[0].lower())
-            print(last_suggestion, end='  ', flush=True)
-        else: #send a tuple
-            last_suggestion = next_word((tkns[-2].lower(), tkns[-1].lower()))
-            print(last_suggestion, end='  ', flush=True)
+while(c != b'\r'):  #stop when user preses enter
+    print("eyoo")
+    
+    sent = total_str  #create word on space
+    print(sent)
+    tkns = sent.split()
+    if(len(tkns) < 2):  #only first space encountered yet
+        last_suggestion = next_word(tkns[0].lower())
+        print("got here")
+        print(last_suggestion, end='  ', flush=True)
+    else: #send a tuple
+        last_suggestion = next_word((tkns[-2].lower(), tkns[-1].lower()))
+        print(last_suggestion, end='  ', flush=True)
     if (c == b'\t' and len(last_suggestion) > 0):   #print last suggestion on tab
         print(last_suggestion[0], end='  ', flush=True)
         sent = sent + " " + last_suggestion[0]
- 

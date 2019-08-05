@@ -1,0 +1,24 @@
+# create switch for ON/OFF predictor text functionality
+    img = np.zeros((300,512,3), np.uint8)
+    switch = '0 : OFF : ON'
+    #Parameters: LabelforTrackbar, Window, Minimum Value, Max Value, callback(function that will be called whenever value changes)
+    cv2.createTrackbar(switch, 'ASL Translation App',0,1,nothing)
+    s = cv2.getTrackbarPos(switch,'ASL Translation App')
+    #If switch is on then execute predictor text file. 
+    if s == 1:
+        exec(open('markov_nextwordpred.py').read())
+        img[:] = 1
+        print("Somethin' happenings!")
+    else: 
+        img[:] = 0
+
+if keypress == ord('t'):
+        #exec(open('markov_nextwordpred.py').read()) 
+        os.system('python Gesture_Recognize_sign.py &')
+        os.system('python markov_nextwordpred.py &')
+
+if __name__ == '__main__':
+    for file in ('markov_nextwordpred'): 
+        p = multiprocessing.Process(target=lambda __import__: file)
+        p.start()
+            

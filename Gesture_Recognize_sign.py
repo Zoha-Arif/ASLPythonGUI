@@ -72,6 +72,7 @@ pred_text = ''
 count_frames = 0
 total_str = ''
 flag = False
+start = False
 
 while True:
     
@@ -121,16 +122,21 @@ while True:
         #cv2.resizeWindow('ASL Translation App', 800, 800)
         cv2.imshow("Image", thresh)
 
+        if (start == True):
+            print('STDOUT:{}'.format(stdout))
+            
     rval, frame = vc.read()
 
     keypress = cv2.waitKey(1)
     if keypress == ord('c'):
         flag = True
-        #Begin word predictor
+        start = True
+        #=============================Begin word predictor=============================
         from subprocess import PIPE
         #process = subprocess.Popen(['markov_nextwordpred.py'], stdout=PIPE, stderr=PIPE)
         process = subprocess.Popen([sys.executable, "markov_nextwordpred.py"])
         stdout, stderr = process.communicate()
+            
     if keypress == ord('q'):
         break
     if keypress == ord('d'):

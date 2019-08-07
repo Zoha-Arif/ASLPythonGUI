@@ -77,27 +77,15 @@ start = False
 while True:
     
     if frame is not None: 
-        #=============For text predictor============= 
-        #from markov_nextwordpred import c, last_suggestion 
-        def c(cVar): 
-            cv2.putText(blackboard, cVar, (50, 40), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 203, 253))
-        def last(last_suggestion):
-            cv2.putText(blackboard, last_suggestion, (50, 40), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 203, 253))
-        #============================================ 
-
         frame = cv2.flip(frame, 1)
-        frame = cv2.resize( frame, (500,500) )
+        frame = cv2.resize(frame, (500,500))
                                                   # B  G  R
         cv2.rectangle(frame, (300,300), (100,100), (0,203,253), 2)
-        
         crop_img = frame[100:300, 100:300]
         grey = cv2.cvtColor(crop_img, cv2.COLOR_BGR2GRAY)
-        
-        #thresh = cv2.threshold(grey,210,255,cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU)[1]
         thresh = cv2.threshold(grey,210,255,cv2.THRESH_TOZERO+cv2.THRESH_OTSU)[1]
-        #thresh = cv2.Canny(grey,210,255) 
-        #thresh = cv2.cvtColor(crop_img, cv2.COLOR_BGR2GRAY)
         blackboard = np.zeros(frame.shape, dtype=np.uint8)
+
         cv2.putText(blackboard, "Translation: ", (30, 40), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 203, 253))
         cv2.putText(blackboard, "Press 'C' to begin translation program and 'Q' to quit/return home.", (30, 60), cv2.FONT_HERSHEY_DUPLEX, 0.4, (0, 203, 253))
         cv2.putText(blackboard, "Press 'D' to delete the last character in the translation.", (30, 77), cv2.FONT_HERSHEY_DUPLEX, 0.4, (0, 203, 253))
@@ -117,18 +105,30 @@ while True:
             cv2.putText(blackboard, total_str, (30, 120), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 203, 253))
         res = np.hstack((frame, blackboard))
         
-        cv2.imshow("ASL Translation App", res)
-        cv2.namedWindow('ASL Translation App')
+        cv2.imshow("We Sign together Translation", res)
+        cv2.namedWindow('We Sign together Translation')
         #cv2.resizeWindow('ASL Translation App', 800, 800)
         cv2.imshow("Image", thresh)
+        
+        #image = cv2.imread('translation.png')
+                                #, cols, rows
+        #image = cv2.resize(image, (50, 100))
 
+        #====================Trying to change thetitle=====================
+        #cv2.imshow("ASL Translation App", image)
+        #cv2.imshow(blackboard, image)
         if (start == True):
             print('STDOUT:{}'.format(stdout))
+            pred = ('STDOUT:{}'.format(stdout))
+            cv2.putText(blackboard, pred, (30, 150), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 203, 253))
             
     rval, frame = vc.read()
 
     keypress = cv2.waitKey(1)
     if keypress == ord('c'):
+        from markov_nextwordpred import *
+        #c = b' '
+        #c = "LOLOLOLOL"
         flag = True
         start = True
         #=============================Begin word predictor=============================
@@ -138,14 +138,22 @@ while True:
         stdout, stderr = process.communicate()
             
     if keypress == ord('q'):
-        break
+        break 
+        start = False
     if keypress == ord('d'):
         total_str = total_str[:-1]
     if keypress == ord('s'):
         total_str = total_str + ' '
+        from markov_nextwordpred import *
+        #c = b' '
+        #c = "LOLOLOLOLOLOLOL"
+    if keypress == ord('m'):
+        #Skype
+        print("Hiiii")
     
     def nothing(x):
         pass
+
 vc.release()
 cv2.destroyAllWindows()
 cv2.waitKey(1)

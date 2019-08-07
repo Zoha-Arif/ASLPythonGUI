@@ -21,4 +21,8 @@ if __name__ == '__main__':
     for file in ('markov_nextwordpred'): 
         p = multiprocessing.Process(target=lambda __import__: file)
         p.start()
-            
+
+
+        for output in process.stdout:
+            #output is constantly being changed.  
+            sys.stdout.write(output)

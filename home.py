@@ -36,7 +36,6 @@ canvas.create_image(0, 0, image=tk_img, anchor='nw')
 
 
 def translate():
-    #os.system('python markov_nextwordpred.py &')
     exec(open("Gesture_Recognize_sign.py").read())
    
     

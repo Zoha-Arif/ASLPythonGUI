@@ -1,6 +1,4 @@
 from Gesture_Recognize_sign import *
-import multiprocessing
-import time
 
 train_data = 'test_text.txt'
 
@@ -76,7 +74,7 @@ from multiprocessing import Process
 import sys
 while(True):  #stop when user preses enter
     #sent = Gesture_Recognize_sign.total_str
-    sent = total_str
+    sent = "Hello"
     if(c==''):
         tkns = sent.split()
         if(len(tkns) < 2):  #only first space encountered yet

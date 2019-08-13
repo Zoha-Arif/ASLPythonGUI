@@ -27,6 +27,9 @@ import keyboard
 import multiprocessing
 import markov_nextwordpred
 import subprocess
+from markov_nextwordpred import *
+import threading
+import time
 
 model = load_model('./new_model6.h5')
 
@@ -70,7 +73,7 @@ rval, frame = vc.read()
 old_text = ''
 pred_text = ''
 count_frames = 0
-total_str = ''
+total_str = 'K'
 flag = False
 start = False
 
@@ -103,6 +106,7 @@ while True:
                 count_frames = 0
 
             cv2.putText(blackboard, total_str, (30, 120), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 203, 253))
+        
         res = np.hstack((frame, blackboard))
         
         cv2.imshow("We Sign together Translation", res)
@@ -110,33 +114,28 @@ while True:
         #cv2.resizeWindow('ASL Translation App', 800, 800)
         cv2.imshow("Image", thresh)
         
-        #image = cv2.imread('translation.png')
-                                #, cols, rows
-        #image = cv2.resize(image, (50, 100))
-
-        #====================Trying to change thetitle=====================
-        #cv2.imshow("ASL Translation App", image)
-        #cv2.imshow(blackboard, image)
         if (start == True):
-            print('STDOUT:{}'.format(stdout))
-            pred = ('STDOUT:{}'.format(stdout))
-            cv2.putText(blackboard, pred, (30, 150), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 203, 253))
+            print("1")
             
+
     rval, frame = vc.read()
 
     keypress = cv2.waitKey(1)
     if keypress == ord('c'):
-        from markov_nextwordpred import *
-        #c = b' '
-        #c = "LOLOLOLOL"
         flag = True
         start = True
+        print("2")
+        total_str = 'K'
         #=============================Begin word predictor=============================
-        from subprocess import PIPE
-        #process = subprocess.Popen(['markov_nextwordpred.py'], stdout=PIPE, stderr=PIPE)
-        process = subprocess.Popen([sys.executable, "markov_nextwordpred.py"])
-        stdout, stderr = process.communicate()
-            
+        from subprocess import PIPE,STDOUT
+        def runWord(): 
+            exec(open("markov_nextwordpred.py").read())
+        t1 = threading.Thread(target=runWord, daemon=True)
+        t1.start()
+        t1.join()
+        #process = subprocess.Popen([sys.executable, "markov_nextwordpred.py"], stdout=PIPE)
+        #process = subprocess.Popen(["markov_nextwordpred.py"], shell=True, stdout=PIPE, bufsize=1, stderr=STDOUT)
+        #stdout, stderr = process.communicate()
     if keypress == ord('q'):
         break 
         start = False
@@ -144,9 +143,6 @@ while True:
         total_str = total_str[:-1]
     if keypress == ord('s'):
         total_str = total_str + ' '
-        from markov_nextwordpred import *
-        #c = b' '
-        #c = "LOLOLOLOLOLOLOL"
     if keypress == ord('m'):
         #Skype
         print("Hiiii")
@@ -155,11 +151,8 @@ while True:
         pass
 
 vc.release()
-cv2.destroyAllWindows()
-cv2.waitKey(1)
-
-
-# In[17]:
+#cv2.destroyAllWindows() 
+cv2.waitKey(20)
 
 
 vc.release()

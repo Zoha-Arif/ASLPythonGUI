@@ -36,16 +36,14 @@ canvas.create_image(0, 0, image=tk_img, anchor='nw')
 
 
 def translate():
-    #execfile('Gesture_Recognize_sign.py')
-    #os.system('python Gesture_Recognize_sign.py &')
     #os.system('python markov_nextwordpred.py &')
-    for file in ('Gesture_Recognize_sign', 'markov_nextwordpred'): 
-        p = multiprocessing.Process(target=lambda __import__: file)
-        p.start()
+    exec(open("Gesture_Recognize_sign.py").read())
    
     
 #Translate Button
-translate_button = tk.Button(root, highlightthickness=0, text = "    T R A N S L A T E", command = translate, anchor = 'w',
+from functools import partial 
+
+translate_button = tk.Button(root, highlightthickness=0, text = "    T R A N S L A T E", command=lambda : translate, anchor = 'w',
                     width = 16, activebackground = "#16A9FF", bd=0, bg="#16A9FF",fg="#FFFFFF", font='Arial 9 bold')
 translate_button_window = canvas.create_window(33, 43, anchor='nw', window=translate_button)    
 
@@ -71,15 +69,5 @@ image2 = ImageTk.PhotoImage(image)
 heartb.config(image=image2, highlightthickness=0,  activebackground = "#FFD966", bd=0, bg="#FFD966", width=50, height=50) #These set the height and width of box of the picture.
 heartb.image = image2
 heartb_window = canvas.create_window(680, 30, anchor='nw', window=heartb) #These numbers move the picture. 
-
-
-#while True: 
-#        ret, frame = cap.read()
-#        cv2.imshow('frame', frame)
-#
-#        if cv2.waitKey(1) & 0xFF == ord('q'):
-#            break 
-#    cap.release()
-#    cv2.destroyAllWindows()
 
 root.mainloop()

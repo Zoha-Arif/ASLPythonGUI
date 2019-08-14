@@ -38,11 +38,11 @@ canvas.create_image(0, 0, image=tk_img, anchor='nw')
 def translate():
     exec(open("Gesture_Recognize_sign.py").read())
    
-    
-#Translate Button
-from functools import partial 
+def SocialApp():
+    exec(open("heart.py").read())
 
-translate_button = tk.Button(root, highlightthickness=0, text = "    T R A N S L A T E", command=lambda : translate, anchor = 'w',
+#Translate Button
+translate_button = tk.Button(root, highlightthickness=0, text = "    T R A N S L A T E", command=lambda :translate, anchor = 'w',
                     width = 16, activebackground = "#16A9FF", bd=0, bg="#16A9FF",fg="#FFFFFF", font='Arial 9 bold')
 translate_button_window = canvas.create_window(33, 43, anchor='nw', window=translate_button)    
 
@@ -51,7 +51,6 @@ image = Image.open("helpb.png")
 image = image.resize((44, 44), Image.ANTIALIAS) ## The (250, 250) is (height, width)
 #pw.pic = ImageTk.PhotoImage(image)
 helpb = tk.Button(root, width=5, height=0, command = root.quit)
-#image1 = ImageTk.PhotoImage(file="helpb.png")
 image1 = ImageTk.PhotoImage(image)
 # Color Code = #FFD966
 helpb.config(image=image1, highlightthickness=0,  activebackground = "#FFD966", bd=0, bg="#FFD966", width=50, height=50)#These set the height and width of box of the picture.
@@ -61,8 +60,7 @@ helpb_window = canvas.create_window(200, 30, anchor='nw', window=helpb) #These n
 #Heart/Information Button
 image = Image.open("heartb.png")
 image = image.resize((38, 38), Image.ANTIALIAS) ## The (250, 250) is (height, width)
-heartb = tk.Button(root, width=5, height=0, command = root.quit)
-#image1 = ImageTk.PhotoImage(file="helpb.png")
+heartb = tk.Button(root, width=5, height=0, command=lambda : SocialApp)
 image2 = ImageTk.PhotoImage(image)
 # Color Code = #FFD966
 heartb.config(image=image2, highlightthickness=0,  activebackground = "#FFD966", bd=0, bg="#FFD966", width=50, height=50) #These set the height and width of box of the picture.

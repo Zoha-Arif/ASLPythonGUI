@@ -18,11 +18,6 @@ from io import StringIO
 from matplotlib import pyplot as plt
 from PIL import Image
 
-import keras
-import multiprocessing
-import markov_nextwordpred
-#import Gesture_Recognize_sign
-
 #Arranging the HomePage
 FILENAME = 'home.png'
 root = tk.Tk()
@@ -34,7 +29,6 @@ canvas.create_image(0, 0, image=tk_img, anchor='nw')
 
 def translate():
     print("Hello")
-    #exec(open("Gesture_Recognize_sign.py").read())
    
 def SocialApp():
     print("Still persisting...")

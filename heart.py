@@ -1,4 +1,4 @@
-import tkinter 
+import tkinter as tk
 from tkinter import *
 import os
 from PIL import ImageTk, Image
@@ -77,50 +77,64 @@ def register():
     Button(screen1, text = "Register", width= 10, height = 1, command=register_user).pack()
 
 def login():
+    FILENAME1 = "gestureLogin.png"
+    
     global screen2 
     screen2 = Toplevel(screen)
-    screen2.title("Login: We Sign Together Muse")
-    screen2.geometry("300x250")
+    screen2.title("Login: Reaching Signs Together")
+    canvas1 = tk.Canvas(screen2, width=400, height=350)
+    canvas1.pack()
+                                                        #width, height
+    tk_img1 = ImageTk.PhotoImage(Image.open(FILENAME1).resize((400, 350)))
+    canvas1.create_image(0, 0, image=tk_img1, anchor='nw')
 
     Label(screen2, text = "Please enter details below to login.").pack()
     Label(screen2, text = "").pack()
 
-    global username_verify 
-    global password_verify 
 
-    username_verify = StringVar()
-    password_verify = StringVar()
+    #global username_verify 
+    #global password_verify 
 
-    global username_entry1
-    global password_entry1
+    #username_verify = StringVar()
+    #password_verify = StringVar()
 
-    Label(screen2, text = "Username * ").pack()
-    username_entry1 = Entry(screen2, textvariable=username_verify)
-    username_entry1.pack()
-    Label(screen2, text = "").pack()    
-    Label(screen2, text = "Password * ").pack()
-    password_entry1 = Entry(screen2, textvariable=password_verify)
-    password_entry1.pack()
-    Label(screen2, text = "").pack()    
-    Button(screen2, text = "Login", width = 10, height = 1, command = login_verify).pack()
+    #global username_entry1
+    #global password_entry1
+
+    #Label(screen2, text = "Username * ").pack()
+    #username_entry1 = Entry(screen2, textvariable=username_verify)
+    #username_entry1.pack()
+    #Label(screen2, text = "").pack()    
+    #Label(screen2, text = "Password * ").pack()
+    #password_entry1 = Entry(screen2, textvariable=password_verify)
+    #password_entry1.pack()
+    #Label(screen2, text = "").pack()    
+    #Button(screen2, text = "Login", width = 10, height = 1, command = login_verify).pack()
     
 
 def main_screen():
-    FILENAME = "loginHome.png"
-    home_img = ImageTk.PhotoImage(file = FILENAME)
-
+    FILENAME = "gestureHome.png"
+  
     global screen
     screen = Tk()
-    screen.geometry("300x250")
-    screen.title("Home: We Sign Together Muse")
+    screen.title("Home: Reaching Signs Together")
+    canvas = tk.Canvas(screen, width=400, height=350)
+    canvas.pack()
+                                                         #width, height
+    tk_img = ImageTk.PhotoImage(Image.open(FILENAME).resize((400, 350)))
+    canvas.create_image(0, 0, image=tk_img, anchor='nw')
 
-    Label(screen, image=home_img).pack()
+    #Login Button 
+    login_button = tk.Button(screen, highlightthickness=0, text = "    L O G I N", command=login, anchor = 'w',
+                    width = 16, activebackground = "#16A9FF", bd=0, bg="#16A9FF",fg="#FFFFFF", font='Arial 13 bold')
+                                               #second number is up and down
+    login_button_window = canvas.create_window(125, 184, anchor='nw', window=login_button)
 
-    Label (text="We Sign Together Muse", bg="grey",width="300", height="2", font=("Calibri",13)).pack()
-    Label(text="").pack()
-    Button(text="Login", height="2", width="30", command=login).pack()
-    Label(text="").pack()
-    Button(text="Register", height="2", width="30", command=register).pack()
+    #Register Button 
+    register_button = tk.Button(screen, highlightthickness=0, text = "  R E G I S T E R", command=register, anchor = 'w',
+                    width = 16, activebackground = "#16A9FF", bd=0, bg="#16A9FF",fg="#FFFFFF", font='Arial 13 bold')
+                                               #second number is up and down
+    register_button_window = canvas.create_window(120, 255, anchor='nw', window=register_button)
 
     screen.mainloop()
 

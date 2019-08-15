@@ -4,17 +4,17 @@ import os
 from PIL import ImageTk, Image
 
 def login_success():
-    Label(screen2, text = "Login Success", fg="green", font=("Calibri", 11)).pack()
+    Label(screen2, text = "Login Success!", fg="green", font='Arial 11 bold').pack()
     global screen3 
     screen3 = Toplevel(screen)
-    screen3.title("We Sign Together Muse")
+    screen3.title("Reaching Signs Together")
     screen3.geometry("750x490")
 
 def password_not_recognized():
-    Label(screen2, text = "Password does not match username.", fg="red", font=("Calibri", 11)).pack()
+    Label(screen2, text = "Password does not match username.", fg="red", font='Arial 11 bold').pack()
     
 def user_not_found():
-    Label(screen2, text = "Username not found.", fg="red", font=("Calibri", 11)).pack()    
+    Label(screen2, text = "Username not found.", fg="red", font='Arial 11 bold').pack()    
 
 def register_user():
     username_info = username.get()
@@ -29,7 +29,7 @@ def register_user():
     username_entry.delete(0, END)
     password_entry.delete(0, END)
 
-    Label(screen1, text = "Registration Success", fg="green", font=("Calibri", 11)).pack()
+    Label(screen1, text = "Registration Success. You may now login.", fg="green", font='Arial 11 bold').pack()
 
 def login_verify():
     username1 = username_verify.get()
@@ -51,11 +51,17 @@ def login_verify():
         user_not_found()
 
 def register():
+    FILENAME2 = "gestureRegister.png"
+
     global screen1
     screen1 = Toplevel(screen)
-    screen1.title("Register: We Sign Together Muse")
-    screen1.geometry("200x250")
+    screen1.title("Register: Reaching Signs Together")
+    canvas2 = tk.Canvas(screen1, width=400, height=350)
+    canvas2.pack()
     
+    tk_img2 = ImageTk.PhotoImage(Image.open(FILENAME2).resize((400, 350)))
+    canvas2.create_image(0, 0, image=tk_img2, anchor='nw')
+
     global username 
     global password 
 
@@ -65,16 +71,24 @@ def register():
     global username_entry 
     global password_entry 
 
-    Label(screen1, text = "Please enter details below.").pack()
-    Label(screen1, text = "").pack()
-    Label(screen1, text = "Username * ").pack()
-    username_entry = Entry(screen1, textvariable= username)
-    username_entry.pack()
-    Label(screen1, text = "Password * ").pack()
-    password_entry = Entry(screen1, textvariable = password)
-    password_entry.pack()
-    Label(screen1, text = "").pack()
-    Button(screen1, text = "Register", width= 10, height = 1, command=register_user).pack()
+    username_title1 = Label(screen1, text = "Enter username for new account.", font='Arial 8 bold')
+    username_window1 = canvas2.create_window(114, 165, anchor='nw', window=username_title1)
+
+    username_entry = Entry(screen1, textvariable=username)
+    username_entry_window = canvas2.create_window(114, 190, anchor='nw', window=username_entry)
+
+    password_title1 = Label(screen1, text = "Set password for your new account.", font='Arial 8 bold')
+    password_window1 = canvas2.create_window(114, 220, anchor='nw', window=password_title1)
+
+    password_entry = Entry(screen1, textvariable=password)
+    password_entry_window = canvas2.create_window(114, 245, anchor='nw', window=password_entry)
+    
+    register_button1 = tk.Button(screen1, highlightthickness=0, text = "R E G I S T E R", command=register_user, anchor = 'w',
+                    width = 10, activebackground = "#16A9FF", bd=0, bg="#16A9FF",fg="#FFFFFF", font='Arial 8 bold')
+                                               #second number is up and down
+    register_button_window = canvas2.create_window(160, 290, anchor='nw', window=register_button1)
+
+    screen1.mainloop()
 
 def login():
     FILENAME1 = "gestureLogin.png"
@@ -88,28 +102,36 @@ def login():
     tk_img1 = ImageTk.PhotoImage(Image.open(FILENAME1).resize((400, 350)))
     canvas1.create_image(0, 0, image=tk_img1, anchor='nw')
 
-    Label(screen2, text = "Please enter details below to login.").pack()
-    Label(screen2, text = "").pack()
+    #directions = Label(screen2, text = "Please enter details below to login.", font='Arial 8 bold')
+    #directions_window = canvas1.create_window(44, 160, anchor='nw', window=directions)
 
+    global username_verify 
+    global password_verify 
 
-    #global username_verify 
-    #global password_verify 
+    username_verify = StringVar()
+    password_verify = StringVar()
 
-    #username_verify = StringVar()
-    #password_verify = StringVar()
+    global username_entry1
+    global password_entry1
 
-    #global username_entry1
-    #global password_entry1
+    username_title = Label(screen2, text = "Username", font='Arial 8 bold')
+    username_window = canvas1.create_window(114, 165, anchor='nw', window=username_title)
 
-    #Label(screen2, text = "Username * ").pack()
-    #username_entry1 = Entry(screen2, textvariable=username_verify)
-    #username_entry1.pack()
-    #Label(screen2, text = "").pack()    
-    #Label(screen2, text = "Password * ").pack()
-    #password_entry1 = Entry(screen2, textvariable=password_verify)
-    #password_entry1.pack()
-    #Label(screen2, text = "").pack()    
-    #Button(screen2, text = "Login", width = 10, height = 1, command = login_verify).pack()
+    username_entry1 = Entry(screen2, textvariable=username_verify)
+    username_entry1_window = canvas1.create_window(114, 190, anchor='nw', window=username_entry1)
+
+    password_title = Label(screen2, text = "Password", font='Arial 8 bold')
+    password_window = canvas1.create_window(114, 220, anchor='nw', window=password_title)
+
+    password_entry1 = Entry(screen2, textvariable=password_verify)
+    password_entry1_window = canvas1.create_window(114, 245, anchor='nw', window=password_entry1)
+   
+    login_button1 = tk.Button(screen2, highlightthickness=0, text = "L O G I N", command=login_verify, anchor = 'w',
+                    width = 10, activebackground = "#16A9FF", bd=0, bg="#16A9FF",fg="#FFFFFF", font='Arial 8 bold')
+                                               #second number is up and down
+    login_button_window = canvas1.create_window(165, 295, anchor='nw', window=login_button1)
+
+    screen2.mainloop()
     
 
 def main_screen():

@@ -1,6 +1,7 @@
 import tkinter 
 from tkinter import *
 import os
+from PIL import ImageTk, Image
 
 def login_success():
     Label(screen2, text = "Login Success", fg="green", font=("Calibri", 11)).pack()
@@ -8,7 +9,6 @@ def login_success():
     screen3 = Toplevel(screen)
     screen3.title("We Sign Together Muse")
     screen3.geometry("750x490")
-
 
 def password_not_recognized():
     Label(screen2, text = "Password does not match username.", fg="red", font=("Calibri", 11)).pack()
@@ -20,7 +20,8 @@ def register_user():
     username_info = username.get()
     password_info = password.get()
 
-    file = open(username_info, "w")
+    file_name = r"C:\\Users\\ZOHA\\Documents\\GitHub\\ASLPythonGUI\\UsersReachingSigns\\" + username_info
+    file = open(file_name, "w")
     file.write(username_info+"\n")
     file.write(password_info)
     file.close()
@@ -36,9 +37,11 @@ def login_verify():
     username_entry1.delete(0, END)
     password_entry1.delete(0, END)
 
-    list_of_files = os.listdir()
+    file_name1 = r"C:\\Users\\ZOHA\\Documents\\GitHub\\ASLPythonGUI\\UsersReachingSigns\\"
+    list_of_files = os.listdir(file_name1)
     if username1 in list_of_files: 
-        file1 = open(username1, "r")
+        file_name2 = r"C:\\Users\\ZOHA\\Documents\\GitHub\\ASLPythonGUI\\UsersReachingSigns\\" + username1
+        file1 = open(file_name2, "r")
         verify = file1.read().splitlines()
         if password1 in verify: 
             login_success()
@@ -103,10 +106,16 @@ def login():
     
 
 def main_screen():
+    FILENAME = "loginHome.png"
+    home_img = ImageTk.PhotoImage(file = FILENAME)
+
     global screen
     screen = Tk()
     screen.geometry("300x250")
     screen.title("Home: We Sign Together Muse")
+
+    Label(screen, image=home_img).pack()
+
     Label (text="We Sign Together Muse", bg="grey",width="300", height="2", font=("Calibri",13)).pack()
     Label(text="").pack()
     Button(text="Login", height="2", width="30", command=login).pack()

@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import *
 import os
 from PIL import ImageTk, Image
+from tkinter import filedialog
 
 def daily_post():
     print("DAILY POST")
@@ -9,12 +10,40 @@ def daily_post():
 def daily_public():
     print("DAILY POST")
 
+def uploadPhoto():
+    #Display a dialog for the user to select a jpg file.
+    filePath = filedialog.askopenfilename(initialdir=os.getcwd(), title="Select JPEG for upload.", filetypes=(("jpeg files", "*.jpg"), ("all files", "*.*")))
+
+    #Show the selected jpg on the canvas. 
+    filePath = str(filePath)
+    tk_img4 = ImageTk.PhotoImage(Image.open(filePath).resize((100, 100)))
+    photob = tk.Button(screen3, width=5, height=0, command = uploadPhoto)
+    photob.config(image=tk_img4, width=100, height=70, bg="#DADA7B", relief="flat")#These set the height and width of box of the picture.
+    photob_window = canvas3.create_window(305, 185, anchor='nw', window=photob) #These numbers move the picture. 
+
+    screen3.mainloop()
+
+def uploadProfilePhoto(): 
+    #Display a dialog for the user to select a jpg file.
+    filePath1 = filedialog.askopenfilename(initialdir=os.getcwd(), title="Select JPEG for upload.", filetypes=(("jpeg files", "*.jpg"), ("all files", "*.*")))
+
+    #Show the selected jpg on the canvas. 
+    filePath1 = str(filePath1)
+    tk_img5 = ImageTk.PhotoImage(Image.open(filePath1).resize((100, 100)))
+    photob = tk.Button(screen3, width=5, height=0, command = uploadProfilePhoto)
+    photob.config(image=tk_img5, width=90, height=90, bg="#F1D567", relief="flat")#These set the height and width of box of the picture.
+    photob_window = canvas3.create_window(610, 190, anchor='nw', window=photob) #These numbers move the picture. 
+
+    screen3.mainloop()
+
 def login_success():
     Label(screen2, text = "Login Success!", fg="green", font='Arial 11 bold').pack()
 
     FILENAME3 = "gestureScreenHome.png"
     
     global screen3 
+    global canvas3
+
     screen3 = Toplevel(screen)
     screen3.title("Reaching Signs Together")
     canvas3 = tk.Canvas(screen3, width=750, height=490)
@@ -36,6 +65,29 @@ def login_success():
                     width = 10, activebackground = "#16A9FF", bd=0, bg="#16A9FF",fg="#FFFFFF", font='Arial 7 bold')
                                                #second number is up and down
     public_main_button_window = canvas3.create_window(75, 260, anchor='nw', window=public_main_button)
+
+    daily_mood_entry = Text(screen3, height=1, width = 15, highlightcolor = "white", highlightbackground="white", relief="flat", font="Arial 11 bold")
+    daily_mood_entry_window = canvas3.create_window(570, 330, anchor='nw', window=daily_mood_entry)
+
+    image3 = Image.open("gesturePictureUpload.png")
+                           #width, height
+    image3 = image3.resize((90, 70), Image.ANTIALIAS) ## The (250, 250) is (height, width)
+    photob = tk.Button(screen3, width=5, height=0, command = uploadPhoto)
+    image4 = ImageTk.PhotoImage(image3)
+    # Color Code = #FFD966
+    photob.config(image=image4, width=90, height=70, bg="#DADA7B", relief="flat")#These set the height and width of box of the picture.
+    photob.image3 = image4
+    photob_window = canvas3.create_window(310, 190, anchor='nw', window=photob) #These numbers move the picture. 
+
+    image5 = Image.open("gestureProfilePicture.png")
+                           #width, height
+    image5 = image5.resize((90, 90), Image.ANTIALIAS) ## The (250, 250) is (height, width)
+    photob1 = tk.Button(screen3, width=5, height=0, command = uploadProfilePhoto)
+    image6 = ImageTk.PhotoImage(image5)
+    # Color Code = #FFD966
+    photob1.config(image=image6, width=90, height=90, bg="#F1D567", relief="flat")#These set the height and width of box of the picture.
+    photob1.image5 = image6
+    photob1_window = canvas3.create_window(610, 190, anchor='nw', window=photob1) #These numbers move the picture. 
 
     screen3.mainloop()
 

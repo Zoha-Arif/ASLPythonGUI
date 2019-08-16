@@ -3,12 +3,41 @@ from tkinter import *
 import os
 from PIL import ImageTk, Image
 
+def daily_post():
+    print("DAILY POST")
+
+def daily_public():
+    print("DAILY POST")
+
 def login_success():
     Label(screen2, text = "Login Success!", fg="green", font='Arial 11 bold').pack()
+
+    FILENAME3 = "gestureScreenHome.png"
+    
     global screen3 
     screen3 = Toplevel(screen)
     screen3.title("Reaching Signs Together")
-    screen3.geometry("750x490")
+    canvas3 = tk.Canvas(screen3, width=750, height=490)
+    canvas3.pack()
+
+    tk_img3 = ImageTk.PhotoImage(Image.open(FILENAME3).resize((750, 490)))
+    canvas3.create_image(0, 0, image=tk_img3, anchor='nw')
+
+
+    post_main_button = tk.Button(screen3, highlightthickness=0, text = "P O S T", command=daily_post, anchor = 'w',
+                    width = 10, activebackground = "#16A9FF", bd=0, bg="#16A9FF",fg="#FFFFFF", font='Arial 7 bold')
+                                               #second number is up and down
+    post_main_button_window = canvas3.create_window(214, 260, anchor='nw', window=post_main_button) 
+    
+    daily_entry = Text(screen3, height=3, width = 30, highlightcolor = "white", highlightbackground="white", relief="flat", font="Arial 11")
+    daily_entry_window = canvas3.create_window(50, 185, anchor='nw', window=daily_entry)
+
+    public_main_button = tk.Button(screen3, highlightthickness=0, text = "P U B L I C ?", command=daily_public, anchor = 'w',
+                    width = 10, activebackground = "#16A9FF", bd=0, bg="#16A9FF",fg="#FFFFFF", font='Arial 7 bold')
+                                               #second number is up and down
+    public_main_button_window = canvas3.create_window(75, 260, anchor='nw', window=public_main_button)
+
+    screen3.mainloop()
 
 def password_not_recognized():
     Label(screen2, text = "Password does not match username.", fg="red", font='Arial 11 bold').pack()
@@ -74,13 +103,13 @@ def register():
     username_title1 = Label(screen1, text = "Enter username for new account.", font='Arial 8 bold')
     username_window1 = canvas2.create_window(114, 165, anchor='nw', window=username_title1)
 
-    username_entry = Entry(screen1, textvariable=username)
+    username_entry = Entry(screen1, textvariable=username, relief="flat", font="Arial")
     username_entry_window = canvas2.create_window(114, 190, anchor='nw', window=username_entry)
 
     password_title1 = Label(screen1, text = "Set password for your new account.", font='Arial 8 bold')
     password_window1 = canvas2.create_window(114, 220, anchor='nw', window=password_title1)
 
-    password_entry = Entry(screen1, textvariable=password)
+    password_entry = Entry(screen1, textvariable=password, relief="flat", font="Arial")
     password_entry_window = canvas2.create_window(114, 245, anchor='nw', window=password_entry)
     
     register_button1 = tk.Button(screen1, highlightthickness=0, text = "R E G I S T E R", command=register_user, anchor = 'w',
@@ -117,13 +146,13 @@ def login():
     username_title = Label(screen2, text = "Username", font='Arial 8 bold')
     username_window = canvas1.create_window(114, 165, anchor='nw', window=username_title)
 
-    username_entry1 = Entry(screen2, textvariable=username_verify)
+    username_entry1 = Entry(screen2, textvariable=username_verify, relief="flat", font="Arial")
     username_entry1_window = canvas1.create_window(114, 190, anchor='nw', window=username_entry1)
 
     password_title = Label(screen2, text = "Password", font='Arial 8 bold')
     password_window = canvas1.create_window(114, 220, anchor='nw', window=password_title)
 
-    password_entry1 = Entry(screen2, textvariable=password_verify)
+    password_entry1 = Entry(screen2, textvariable=password_verify, relief="flat", font="Arial")
     password_entry1_window = canvas1.create_window(114, 245, anchor='nw', window=password_entry1)
    
     login_button1 = tk.Button(screen2, highlightthickness=0, text = "L O G I N", command=login_verify, anchor = 'w',

@@ -8,7 +8,7 @@ def daily_post():
     print("DAILY POST")
 
 def daily_public():
-    print("DAILY POST")
+    print("DAILY PUBLIC")
 
 def uploadPhoto():
     #Display a dialog for the user to select a jpg file.
@@ -35,6 +35,23 @@ def uploadProfilePhoto():
     photob_window = canvas3.create_window(610, 190, anchor='nw', window=photob) #These numbers move the picture. 
 
     screen3.mainloop()
+
+def launch_Posts_Screen():
+    FILENAME4 = "gesturePastPosts.png"
+    
+    global screen4 
+    global canvas4
+
+    screen4 = Toplevel(screen)
+    screen4.title("Reaching Signs Together")
+    canvas4 = tk.Canvas(screen4, width=750, height=490)
+    canvas4.pack()
+
+    tk_img4 = ImageTk.PhotoImage(Image.open(FILENAME4).resize((750, 490)))
+    canvas4.create_image(0, 0, image=tk_img4, anchor='nw')
+
+    screen4.mainloop()
+
 
 def login_success():
     Label(screen2, text = "Login Success!", fg="green", font='Arial 11 bold').pack()
@@ -88,6 +105,16 @@ def login_success():
     photob1.config(image=image6, width=90, height=90, bg="#F1D567", relief="flat")#These set the height and width of box of the picture.
     photob1.image5 = image6
     photob1_window = canvas3.create_window(610, 190, anchor='nw', window=photob1) #These numbers move the picture. 
+
+    image7 = Image.open("gesturePostsButton.png")
+                           #width, height
+    image7 = image7.resize((53, 21), Image.ANTIALIAS) ## The (250, 250) is (height, width)
+    photob3 = tk.Button(screen3, width=5, height=0, command = launch_Posts_Screen)
+    image8 = ImageTk.PhotoImage(image7)
+    # Color Code = #FFD966
+    photob3.config(image=image8, width=53, height=21, bg="white", relief="flat")#These set the height and width of box of the picture.
+    photob3.image7 = image8
+    photob3_window = canvas3.create_window(30, 10, anchor='nw', window=photob3) #These numbers move the picture. 
 
     screen3.mainloop()
 

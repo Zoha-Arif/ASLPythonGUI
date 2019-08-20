@@ -52,6 +52,22 @@ def launch_Posts_Screen():
 
     screen4.mainloop()
 
+def launch_Mail_Screen():
+    FILENAME5 = "gestureFriendHome.png"
+    
+    global screen5 
+    global canvas5
+
+    screen5 = Toplevel(screen)
+    screen5.title("Reaching Signs Together")
+    canvas5 = tk.Canvas(screen5, width=750, height=490)
+    canvas5.pack()
+
+    tk_img5 = ImageTk.PhotoImage(Image.open(FILENAME5).resize((750, 490)))
+    canvas5.create_image(0, 0, image=tk_img5, anchor='nw')
+
+    screen5.mainloop()
+    
 
 def login_success():
     Label(screen2, text = "Login Success!", fg="green", font='Arial 11 bold').pack()
@@ -115,6 +131,17 @@ def login_success():
     photob3.config(image=image8, width=53, height=21, bg="white", relief="flat")#These set the height and width of box of the picture.
     photob3.image7 = image8
     photob3_window = canvas3.create_window(30, 10, anchor='nw', window=photob3) #These numbers move the picture. 
+
+    image9 = Image.open("gestureMailButton.png")
+                           #width, height
+    image9 = image9.resize((33, 14), Image.ANTIALIAS) ## The (250, 250) is (height, width)
+    photob4 = tk.Button(screen3, width=5, height=0, command = launch_Mail_Screen)
+    image10 = ImageTk.PhotoImage(image9)
+    # Color Code = #FFD966
+    photob4.config(image=image10, width=33, height=14, bg="white", relief="flat")#These set the height and width of box of the picture.
+    photob4.image9 = image10
+    photob4_window = canvas3.create_window(255, 10, anchor='nw', window=photob4) #These numbers move the picture. 
+
 
     screen3.mainloop()
 

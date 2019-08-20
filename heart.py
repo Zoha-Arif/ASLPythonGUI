@@ -4,6 +4,61 @@ import os
 from PIL import ImageTk, Image
 from tkinter import filedialog
 
+def register():
+    FILENAME2 = "gestureRegister.png"
+
+    global screen1
+    screen1 = Toplevel(screen)
+    screen1.title("Register: Reaching Signs Together")
+    canvas2 = tk.Canvas(screen1, width=400, height=350)
+    canvas2.pack()
+    
+    tk_img2 = ImageTk.PhotoImage(Image.open(FILENAME2).resize((400, 350)))
+    canvas2.create_image(0, 0, image=tk_img2, anchor='nw')
+
+    global username 
+    global password 
+
+    username = StringVar()
+    password = StringVar()
+
+    global username_entry 
+    global password_entry 
+
+    username_title1 = Label(screen1, text = "Enter username for new account.", font='Arial 8 bold')
+    username_window1 = canvas2.create_window(114, 165, anchor='nw', window=username_title1)
+
+    username_entry = Entry(screen1, textvariable=username, relief="flat", font="Arial")
+    username_entry_window = canvas2.create_window(114, 190, anchor='nw', window=username_entry)
+
+    password_title1 = Label(screen1, text = "Set password for your new account.", font='Arial 8 bold')
+    password_window1 = canvas2.create_window(114, 220, anchor='nw', window=password_title1)
+
+    password_entry = Entry(screen1, textvariable=password, relief="flat", font="Arial")
+    password_entry_window = canvas2.create_window(114, 245, anchor='nw', window=password_entry)
+    
+    register_button1 = tk.Button(screen1, highlightthickness=0, text = "R E G I S T E R", command=register_user, anchor = 'w',
+                    width = 10, activebackground = "#16A9FF", bd=0, bg="#16A9FF",fg="#FFFFFF", font='Arial 8 bold')
+                                               #second number is up and down
+    register_button_window = canvas2.create_window(160, 290, anchor='nw', window=register_button1)
+
+    screen1.mainloop()
+
+def register_user():
+    username_info = username.get()
+    password_info = password.get()
+
+    file_name = r"C:\\Users\\ZOHA\\Documents\\GitHub\\ASLPythonGUI\\UsersReachingSigns\\" + username_info
+    file = open(file_name, "w")
+    file.write(username_info+"\n")
+    file.write(password_info)
+    file.close()
+
+    username_entry.delete(0, END)
+    password_entry.delete(0, END)
+
+    Label(screen1, text = "Registration Success. You may now login.", fg="green", font='Arial 11 bold').pack()
+
 def daily_post():
     print("DAILY POST")
 
@@ -65,6 +120,22 @@ def launch_Mail_Screen():
 
     tk_img5 = ImageTk.PhotoImage(Image.open(FILENAME5).resize((750, 490)))
     canvas5.create_image(0, 0, image=tk_img5, anchor='nw')
+                      #left/right, up/down,    #length, how far down the rectangle will go.
+    canvas5.create_rectangle(50, 180, 290, 130, fill="white", outline ="white", width = 2)
+
+    path10 = "gestureTextProfile.png"
+    img = ImageTk.PhotoImage(Image.open(path10).resize((45, 45)))
+    panel = tk.Label(screen5, image = img)
+    panelPack = canvas5.create_window(54, 130, anchor='nw', window=panel)
+
+    username_display = username1
+    #Usernamed = tk.Text(screen5, height=2, width=30)
+    #Usernamed.insert(tk.END, username1)
+    panel1 = tk.Label(screen5, text=username_display)
+    panelPack1 = canvas5.create_window(110, 130, anchor='nw', window=panel1)
+    #Usernamed.pack()
+    #Usernamed.insert(tk.END, username1)
+    #tk.mainloop()
 
     screen5.mainloop()
     
@@ -84,7 +155,6 @@ def login_success():
 
     tk_img3 = ImageTk.PhotoImage(Image.open(FILENAME3).resize((750, 490)))
     canvas3.create_image(0, 0, image=tk_img3, anchor='nw')
-
 
     post_main_button = tk.Button(screen3, highlightthickness=0, text = "P O S T", command=daily_post, anchor = 'w',
                     width = 10, activebackground = "#16A9FF", bd=0, bg="#16A9FF",fg="#FFFFFF", font='Arial 7 bold')
@@ -124,11 +194,11 @@ def login_success():
 
     image7 = Image.open("gesturePostsButton.png")
                            #width, height
-    image7 = image7.resize((53, 21), Image.ANTIALIAS) ## The (250, 250) is (height, width)
+    image7 = image7.resize((40, 14), Image.ANTIALIAS) ## The (250, 250) is (height, width)
     photob3 = tk.Button(screen3, width=5, height=0, command = launch_Posts_Screen)
     image8 = ImageTk.PhotoImage(image7)
     # Color Code = #FFD966
-    photob3.config(image=image8, width=53, height=21, bg="white", relief="flat")#These set the height and width of box of the picture.
+    photob3.config(image=image8, width=40, height=14, bg="white", relief="flat")#These set the height and width of box of the picture.
     photob3.image7 = image8
     photob3_window = canvas3.create_window(30, 10, anchor='nw', window=photob3) #These numbers move the picture. 
 
@@ -151,22 +221,9 @@ def password_not_recognized():
 def user_not_found():
     Label(screen2, text = "Username not found.", fg="red", font='Arial 11 bold').pack()    
 
-def register_user():
-    username_info = username.get()
-    password_info = password.get()
-
-    file_name = r"C:\\Users\\ZOHA\\Documents\\GitHub\\ASLPythonGUI\\UsersReachingSigns\\" + username_info
-    file = open(file_name, "w")
-    file.write(username_info+"\n")
-    file.write(password_info)
-    file.close()
-
-    username_entry.delete(0, END)
-    password_entry.delete(0, END)
-
-    Label(screen1, text = "Registration Success. You may now login.", fg="green", font='Arial 11 bold').pack()
-
 def login_verify():
+    global username1
+
     username1 = username_verify.get()
     password1 = password_verify.get()
     username_entry1.delete(0, END)
@@ -184,46 +241,6 @@ def login_verify():
             password_not_recognized()
     else: 
         user_not_found()
-
-def register():
-    FILENAME2 = "gestureRegister.png"
-
-    global screen1
-    screen1 = Toplevel(screen)
-    screen1.title("Register: Reaching Signs Together")
-    canvas2 = tk.Canvas(screen1, width=400, height=350)
-    canvas2.pack()
-    
-    tk_img2 = ImageTk.PhotoImage(Image.open(FILENAME2).resize((400, 350)))
-    canvas2.create_image(0, 0, image=tk_img2, anchor='nw')
-
-    global username 
-    global password 
-
-    username = StringVar()
-    password = StringVar()
-
-    global username_entry 
-    global password_entry 
-
-    username_title1 = Label(screen1, text = "Enter username for new account.", font='Arial 8 bold')
-    username_window1 = canvas2.create_window(114, 165, anchor='nw', window=username_title1)
-
-    username_entry = Entry(screen1, textvariable=username, relief="flat", font="Arial")
-    username_entry_window = canvas2.create_window(114, 190, anchor='nw', window=username_entry)
-
-    password_title1 = Label(screen1, text = "Set password for your new account.", font='Arial 8 bold')
-    password_window1 = canvas2.create_window(114, 220, anchor='nw', window=password_title1)
-
-    password_entry = Entry(screen1, textvariable=password, relief="flat", font="Arial")
-    password_entry_window = canvas2.create_window(114, 245, anchor='nw', window=password_entry)
-    
-    register_button1 = tk.Button(screen1, highlightthickness=0, text = "R E G I S T E R", command=register_user, anchor = 'w',
-                    width = 10, activebackground = "#16A9FF", bd=0, bg="#16A9FF",fg="#FFFFFF", font='Arial 8 bold')
-                                               #second number is up and down
-    register_button_window = canvas2.create_window(160, 290, anchor='nw', window=register_button1)
-
-    screen1.mainloop()
 
 def login():
     FILENAME1 = "gestureLogin.png"

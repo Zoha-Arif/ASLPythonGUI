@@ -3,6 +3,7 @@ from tkinter import *
 import os
 from PIL import ImageTk, Image
 from tkinter import filedialog
+import cv2
 
 def register():
     FILENAME2 = "gestureRegister.png"
@@ -84,6 +85,10 @@ def uploadProfilePhoto():
 
     #Show the selected jpg on the canvas. 
     filePath1 = str(filePath1)
+
+    image = cv2.imread(filePath1)
+    specificUser = username1 + ".jpg"
+    cv2.imwrite(("C:\\Users\\ZOHA\\Documents\\GitHub\\ASLPythonGUI\\UsersReachingSigns\\"+ specificUser), image)
     tk_img5 = ImageTk.PhotoImage(Image.open(filePath1).resize((100, 100)))
     photob = tk.Button(screen3, width=5, height=0, command = uploadProfilePhoto)
     photob.config(image=tk_img5, width=90, height=90, bg="#F1D567", relief="flat")#These set the height and width of box of the picture.
@@ -112,6 +117,7 @@ def addNewFriend():
         if friend_entry.get() == "Friend username...press enter":   
             friend_entry.delete(0, '')
             friend_entry.insert(0, '')
+        
                             #left/right, up/down, width, up/down
     canvas5.create_rectangle(50, 180, 310, 130, fill="white", outline ="white", width = 2)
 
@@ -127,10 +133,6 @@ def addNewFriend():
     friend_entry.insert(0, "Enter username...enter")
     friend_entry.bind('<FocusIn>', lambda event: clearBox)
     friend_entry_window = canvas5.create_window(110, 130, anchor='nw', window=friend_entry)
-
-    #username_display = username1
-    #panel1 = tk.Label(screen5, text=username_display)
-    #panelPack1 = canvas5.create_window(110, 130, anchor='nw', window=panel1)
 
 def launch_Mail_Screen():
     FILENAME5 = "gestureFriendHome.png"
@@ -156,12 +158,6 @@ def launch_Mail_Screen():
     photob6.config(image=image13, width=90, height=70, activebackground="#F0D560", bd=0, bg="#F0D560")#These set the height and width of box of the picture.
     photob6.image12 = image13
     photob_window6 = canvas5.create_window(620, 215, anchor='nw', window=photob6) #These numbers move the picture. 
-
-
-    #check how server and client work with multiple hosts. 
-    #Add friend button and verify that the username exists. 
-    #Figure out a way to add friends. 
-    #CHange the user interface for council from print to apepar on tkitner GUI
 
     screen5.mainloop()
     
@@ -208,15 +204,35 @@ def login_success():
     photob.image3 = image4
     photob_window = canvas3.create_window(310, 190, anchor='nw', window=photob) #These numbers move the picture. 
 
-    image5 = Image.open("gestureProfilePicture.png")
+    def findProfilePicture(): 
+        name = username1
+        for root, dirs, files, in os.walk(r"C:\\Users\\ZOHA\\Documents\\GitHub\\ASLPythonGUI\\UsersReachingSigns\\"): 
+            if name in files: 
+                return True
+
+    find1 = findProfilePicture()
+    if find1 == True: 
+        specificUser1 = username1 + ".jpg"
+        image20 = Image.open("C:\\Users\\ZOHA\\Documents\\GitHub\\ASLPythonGUI\\UsersReachingSigns\\"+ specificUser1)
                            #width, height
-    image5 = image5.resize((90, 90), Image.ANTIALIAS) ## The (250, 250) is (height, width)
-    photob1 = tk.Button(screen3, width=5, height=0, command = uploadProfilePhoto)
-    image6 = ImageTk.PhotoImage(image5)
-    # Color Code = #FFD966
-    photob1.config(image=image6, width=90, height=90, bg="#F1D567", relief="flat")#These set the height and width of box of the picture.
-    photob1.image5 = image6
-    photob1_window = canvas3.create_window(610, 190, anchor='nw', window=photob1) #These numbers move the picture. 
+        image20 = image20.resize((90, 90), Image.ANTIALIAS) ## The (250, 250) is (height, width)
+        photob6 = tk.Button(screen3, width=5, height=0, command = uploadProfilePhoto)
+        image21 = ImageTk.PhotoImage(image20)
+        # Color Code = #FFD966
+        photob6.config(image=image21, width=90, height=90, bg="#F1D567", relief="flat")#These set the height and width of box of the picture.
+        photob6.image20 = image21
+        photob6_window = canvas3.create_window(610, 190, anchor='nw', window=photob6) #These numbers move the picture. 
+        
+    else: 
+        image5 = Image.open("gestureProfilePicture.png")
+                           #width, height
+        image5 = image5.resize((90, 90), Image.ANTIALIAS) ## The (250, 250) is (height, width)
+        photob1 = tk.Button(screen3, width=5, height=0, command = uploadProfilePhoto)
+        image6 = ImageTk.PhotoImage(image5)
+        # Color Code = #FFD966
+        photob1.config(image=image6, width=90, height=90, bg="#F1D567", relief="flat")#These set the height and width of box of the picture.
+        photob1.image5 = image6
+        photob1_window = canvas3.create_window(610, 190, anchor='nw', window=photob1) #These numbers move the picture. 
 
     image7 = Image.open("gesturePostsButton.png")
                            #width, height

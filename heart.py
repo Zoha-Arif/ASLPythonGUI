@@ -108,17 +108,29 @@ def launch_Posts_Screen():
     screen4.mainloop()
 
 def addNewFriend():
-    canvas5.create_rectangle(50, 180, 290, 130, fill="white", outline ="white", width = 2)
+    def clearBox(): 
+        if friend_entry.get() == "Friend username...press enter":   
+            friend_entry.delete(0, '')
+            friend_entry.insert(0, '')
+                            #left/right, up/down, width, up/down
+    canvas5.create_rectangle(50, 180, 310, 130, fill="white", outline ="white", width = 2)
 
     path10 = "gestureTextProfile.png"
     img1 = ImageTk.PhotoImage(Image.open(path10).resize((45, 45)))
     panel = tk.Label(screen5, image = img1)
     panelPack = canvas5.create_window(54, 130, anchor='nw', window=panel)
 
-    username_display = username1
-    panel1 = tk.Label(screen5, text=username_display)
-    panelPack1 = canvas5.create_window(110, 130, anchor='nw', window=panel1)
-    #------------------------------------------------------
+    global type_username
+    global friend_entry
+
+    friend_entry = Entry(screen5, relief="flat", font="Arial")
+    friend_entry.insert(0, "Enter username...enter")
+    friend_entry.bind('<FocusIn>', lambda event: clearBox)
+    friend_entry_window = canvas5.create_window(110, 130, anchor='nw', window=friend_entry)
+
+    #username_display = username1
+    #panel1 = tk.Label(screen5, text=username_display)
+    #panelPack1 = canvas5.create_window(110, 130, anchor='nw', window=panel1)
 
 def launch_Mail_Screen():
     FILENAME5 = "gestureFriendHome.png"
@@ -134,19 +146,6 @@ def launch_Mail_Screen():
     tk_img5 = ImageTk.PhotoImage(Image.open(FILENAME5).resize((750, 490)))
     canvas5.create_image(0, 0, image=tk_img5, anchor='nw')
                       #left/right, up/down,    #length, how far down the rectangle will go.
-    
-    #canvas5.create_rectangle(50, 180, 290, 130, fill="white", outline ="white", width = 2)
-
-    #------------------------------------------------------
-    #path10 = "gestureTextProfile.png"
-    #img = ImageTk.PhotoImage(Image.open(path10).resize((45, 45)))
-    #panel = tk.Label(screen5, image = img)
-    #panelPack = canvas5.create_window(54, 130, anchor='nw', window=panel)
-
-    #username_display = username1
-    #panel1 = tk.Label(screen5, text=username_display)
-    #panelPack1 = canvas5.create_window(110, 130, anchor='nw', window=panel1)
-    #------------------------------------------------------
 
     image12 = Image.open("plusb.png")
                            #width, height

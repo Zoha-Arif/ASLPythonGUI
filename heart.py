@@ -107,6 +107,19 @@ def launch_Posts_Screen():
 
     screen4.mainloop()
 
+def addNewFriend():
+    canvas5.create_rectangle(50, 180, 290, 130, fill="white", outline ="white", width = 2)
+
+    path10 = "gestureTextProfile.png"
+    img1 = ImageTk.PhotoImage(Image.open(path10).resize((45, 45)))
+    panel = tk.Label(screen5, image = img1)
+    panelPack = canvas5.create_window(54, 130, anchor='nw', window=panel)
+
+    username_display = username1
+    panel1 = tk.Label(screen5, text=username_display)
+    panelPack1 = canvas5.create_window(110, 130, anchor='nw', window=panel1)
+    #------------------------------------------------------
+
 def launch_Mail_Screen():
     FILENAME5 = "gestureFriendHome.png"
     
@@ -121,21 +134,35 @@ def launch_Mail_Screen():
     tk_img5 = ImageTk.PhotoImage(Image.open(FILENAME5).resize((750, 490)))
     canvas5.create_image(0, 0, image=tk_img5, anchor='nw')
                       #left/right, up/down,    #length, how far down the rectangle will go.
-    canvas5.create_rectangle(50, 180, 290, 130, fill="white", outline ="white", width = 2)
+    
+    #canvas5.create_rectangle(50, 180, 290, 130, fill="white", outline ="white", width = 2)
 
-    path10 = "gestureTextProfile.png"
-    img = ImageTk.PhotoImage(Image.open(path10).resize((45, 45)))
-    panel = tk.Label(screen5, image = img)
-    panelPack = canvas5.create_window(54, 130, anchor='nw', window=panel)
+    #------------------------------------------------------
+    #path10 = "gestureTextProfile.png"
+    #img = ImageTk.PhotoImage(Image.open(path10).resize((45, 45)))
+    #panel = tk.Label(screen5, image = img)
+    #panelPack = canvas5.create_window(54, 130, anchor='nw', window=panel)
 
-    username_display = username1
-    #Usernamed = tk.Text(screen5, height=2, width=30)
-    #Usernamed.insert(tk.END, username1)
-    panel1 = tk.Label(screen5, text=username_display)
-    panelPack1 = canvas5.create_window(110, 130, anchor='nw', window=panel1)
-    #Usernamed.pack()
-    #Usernamed.insert(tk.END, username1)
-    #tk.mainloop()
+    #username_display = username1
+    #panel1 = tk.Label(screen5, text=username_display)
+    #panelPack1 = canvas5.create_window(110, 130, anchor='nw', window=panel1)
+    #------------------------------------------------------
+
+    image12 = Image.open("plusb.png")
+                           #width, height
+    image12 = image12.resize((70, 70), Image.ANTIALIAS) ## The (250, 250) is (height, width)
+    photob6 = tk.Button(screen5, width=5, height=0, command = addNewFriend)
+    image13 = ImageTk.PhotoImage(image12)
+    # Color Code = #FFD966
+    photob6.config(image=image13, width=90, height=70, activebackground="#F0D560", bd=0, bg="#F0D560")#These set the height and width of box of the picture.
+    photob6.image12 = image13
+    photob_window6 = canvas5.create_window(620, 215, anchor='nw', window=photob6) #These numbers move the picture. 
+
+
+    #check how server and client work with multiple hosts. 
+    #Add friend button and verify that the username exists. 
+    #Figure out a way to add friends. 
+    #CHange the user interface for council from print to apepar on tkitner GUI
 
     screen5.mainloop()
     

@@ -31,6 +31,3 @@ Enable users to communicate through ASL by:
 | GUI Framework    | Tkinter (Python)                    |
 | Computer Vision  | OpenCV for video capture & processing  |
 | Data Flow        | Real‑time input, model inference, GUI display |
-
-pip install -r requirements.txt
-python app.py

@@ -2,7 +2,7 @@
 
 An interactive desktop application that recognizes American Sign Language (ASL) gestures in real time using computer vision and machine learning.
 
-Enable users to communicate through ASL by:
+Enables users to communicate through ASL by:
 - Capturing live video from a webcam
 - Recognizing ASL letters or words using a neural network model
 - Displaying recognized text dynamically in a user-friendly GUI
